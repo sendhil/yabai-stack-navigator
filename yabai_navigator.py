@@ -5,6 +5,7 @@ import argparse
 import os
 import subprocess
 import json
+from typing import Any, Dict
 
 
 def call_yabai(args, return_data=True):
@@ -93,52 +94,57 @@ def utility_get_windows(space_data):
     return get_previous_and_next_windows(sorted_window_data)
 
 
-parser = argparse.ArgumentParser()
-group = parser.add_mutually_exclusive_group()
-group.add_argument("-n", "--next", action="store_true", help="next window")
-group.add_argument("-p",
-                   "--previous",
-                   action="store_true",
-                   help="previous window")
-group.add_argument("-d",
-                   "--debug",
-                   action="store_true",
-                   help="print out some data to help with debugging")
+def parse_arg_data() -> Dict[str, Any]:
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-n", "--next", action="store_true", help="next window")
+    group.add_argument("-p",
+                       "--previous",
+                       action="store_true",
+                       help="previous window")
+    group.add_argument("-d",
+                       "--debug",
+                       action="store_true",
+                       help="print out some data to help with debugging")
 
-if len(sys.argv) == 1:
-    parser.print_help(sys.stderr)
-    sys.exit(1)
-args = vars(parser.parse_args())
+    if len(sys.argv) == 1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
 
-space_data = get_space_info()
-is_stacked = is_layout_stacked(space_data)
+    args = vars(parser.parse_args())
 
-if args['debug']:
+    return args
+
+
+def print_debug_info():
     # TODO: Clean this up to lean on `utility_get_windows`
     index = get_layout_index(space_data)
     all_window_data = get_data_for_windows_in_space(index)
-    window_info = get_focused_window(all_window_data)
     sorted_window_data = sort_stacked_windows(
         remove_hammerspoon_windows(all_window_data))
     print(json.dumps(sorted_window_data, indent=4, sort_keys=True))
     sys.exit()
 
-if is_stacked:
-    window_navigation_data = utility_get_windows(space_data)
 
-    # TODO: Simplify
-    if args['next']:
-        focus_on_stacked_window(window_navigation_data["next_window"]["id"])
-    elif args['previous']:
-        focus_on_stacked_window(
-            window_navigation_data["previous_window"]["id"])
-    else:
-        raise Exception("Should not get here")
-else:
+if __name__ == "__main__":
+    args = parse_arg_data()
 
-    if args['next']:
-        focus_on_window()
-    elif args['previous']:
-        focus_on_window(next=False)
+    space_data = get_space_info()
+    is_stacked = is_layout_stacked(space_data)
+
+    if args['debug']:
+        print_debug_info()
+
+    if is_stacked:
+        window_navigation_data = utility_get_windows(space_data)
+        window_key = "next_window" if args['next'] else "previous_window"
+        if not args['next'] and not args['previous']:
+            raise Exception("Should not get here")
+        focus_on_stacked_window(window_navigation_data[window_key]["id"])
     else:
-        raise Exception("Should not get here")
+        if args['next']:
+            focus_on_window()
+        elif args['previous']:
+            focus_on_window(next=False)
+        else:
+            raise Exception("Should not get here")
