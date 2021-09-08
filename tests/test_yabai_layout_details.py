@@ -1,4 +1,4 @@
-from yabai_layout_details import YabaiLayoutDetails
+from yabai_navigator.yabai_layout_details import YabaiLayoutDetails
 from unittest.mock import Mock, MagicMock
 
 

@@ -1,5 +1,5 @@
 import logging
-from yabai_provider import YabaiProvider
+from .yabai_provider import YabaiProvider
 
 
 class YabaiLayoutDetails:

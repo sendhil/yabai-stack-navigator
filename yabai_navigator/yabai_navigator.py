@@ -1,6 +1,6 @@
 import os
 import logging
-from yabai_provider import YabaiProvider
+from .yabai_provider import YabaiProvider
 
 
 class YabaiNavigator:

@@ -1,4 +1,4 @@
-from yabai_navigator import YabaiNavigator
+from yabai_navigator.yabai_navigator import YabaiNavigator
 from unittest.mock import Mock, patch
 
 
