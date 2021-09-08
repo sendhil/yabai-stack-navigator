@@ -1,5 +1,5 @@
 from yabai_navigator import YabaiNavigator
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 
 def test_focus_on_stacked_window_passes_in_window_id():
@@ -12,3 +12,20 @@ def test_focus_on_stacked_window_passes_in_window_id():
     mock.call_yabai.assert_called_with(
         ["yabai", "-m", "window", "--focus", test_window_id],
         return_data=False)
+
+
+@patch('os.system')
+def test_focus_on_window_uses_next(mock_os):
+    navigator = YabaiNavigator()
+    navigator.focus_on_window(next=True)
+    mock_os.assert_called_once()
+    assert ("next" in mock_os.call_args[0][0])
+
+
+@patch('os.system')
+def test_focus_on_window_uses_previous(mock_os):
+    navigator = YabaiNavigator()
+    navigator.focus_on_window(next=False)
+
+    mock_os.assert_called_once()
+    assert ("prev" in mock_os.call_args[0][0])
