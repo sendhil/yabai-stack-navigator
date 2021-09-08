@@ -8,9 +8,38 @@ from typing import Any, Dict
 from yabai_provider import YabaiProvider
 
 
-class YabaiNavigator:
+class YabaiLayoutDetails:
     def __init__(self, yabai_provider=YabaiProvider()):
+        self.yabai_provider = YabaiProvider()
+
+    def get_space_info(self):
+        return self.yabai_provider.call_yabai(
+            ["yabai", "-m", "query", "--spaces", "--space"])
+
+    def get_data_for_windows_in_space(self, index):
+        return self.yabai_provider.call_yabai(
+            ["yabai", "-m", "query", "--windows", "--space",
+             str(index)])
+
+    def is_layout_stacked(self, layout_data):
+        return layout_data["type"] == "stack"
+
+    def get_layout_index(self, layout_data):
+        return layout_data["index"]
+
+    # TODO: Remove as this might not be used
+    def get_focused_window(self, window_data):
+        for window in window_data:
+            if window["focused"] == 1:
+                return window
+
+
+class YabaiNavigator:
+    def __init__(self,
+                 yabai_provider=YabaiProvider(),
+                 layout_details=YabaiLayoutDetails()):
         self.yabai_provider = yabai_provider
+        self.layout_details = layout_details
 
     # TODO: Rename
     def focus_on_stacked_window(self, window_id):
@@ -28,28 +57,6 @@ class YabaiNavigator:
             os.system(
                 "yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last"
             )
-
-    # Data Retrieval
-
-    def get_space_info(self):
-        return self.yabai_provider.call_yabai(
-            ["yabai", "-m", "query", "--spaces", "--space"])
-
-    def get_data_for_windows_in_space(self, index):
-        return self.yabai_provider.call_yabai(
-            ["yabai", "-m", "query", "--windows", "--space",
-             str(index)])
-
-    def is_layout_stacked(self, layout_data):
-        return layout_data["type"] == "stack"
-
-    def get_layout_index(self, layout_data):
-        return layout_data["index"]
-
-    def get_focused_window(self, window_data):
-        for window in window_data:
-            if window["focused"] == 1:
-                return window
 
     def sort_stacked_windows(self, window_data):
         sorted_window_data = sorted(window_data,
@@ -76,9 +83,12 @@ class YabaiNavigator:
 
         raise Exception("Shoudln't get here")
 
+    # TODO - rename split up?
     def utility_get_windows(self, space_data):
-        index = self.get_layout_index(space_data)
-        all_window_data = self.get_data_for_windows_in_space(index)
+        index = self.layout_details.get_layout_index(space_data)
+        all_window_data = self.layout_details.get_data_for_windows_in_space(
+            index)
+        #TODO - SImplify this
         sorted_window_data = self.sort_stacked_windows(
             self.remove_hammerspoon_windows(all_window_data))
         return self.get_previous_and_next_windows(sorted_window_data)
@@ -108,9 +118,10 @@ def parse_arg_data() -> Dict[str, Any]:
 
 def print_debug_info():
     navigator = YabaiNavigator()
+    layout_details = YabaiLayoutDetails()
     # TODO: Clean this up to lean on `utility_get_windows`
-    index = navigator.get_layout_index(space_data)
-    all_window_data = navigator.get_data_for_windows_in_space(index)
+    index = layout_details.get_layout_index(space_data)
+    all_window_data = layout_details.get_data_for_windows_in_space(index)
     sorted_window_data = navigator.sort_stacked_windows(
         navigator.remove_hammerspoon_windows(all_window_data))
     print(json.dumps(sorted_window_data, indent=4, sort_keys=True))
@@ -122,9 +133,10 @@ if __name__ == "__main__":
     args = parse_arg_data()
 
     navigator = YabaiNavigator()
+    layout_details = YabaiLayoutDetails()
 
-    space_data = navigator.get_space_info()
-    is_stacked = navigator.is_layout_stacked(space_data)
+    space_data = layout_details.get_space_info()
+    is_stacked = layout_details.is_layout_stacked(space_data)
 
     if args['debug']:
         print_debug_info()
