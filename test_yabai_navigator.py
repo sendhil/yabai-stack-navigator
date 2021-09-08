@@ -10,7 +10,7 @@ def test_focus_on_stacked_window_passes_in_window_id():
     navigator.focus_on_stacked_window(test_window_id)
 
     mock.call_yabai.assert_called_with(
-        ["-m", "window", "--focus", test_window_id], return_data=False)
+        ["-m", "window", "--focus", test_window_id])
 
 
 @patch('os.system')
