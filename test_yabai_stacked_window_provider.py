@@ -59,3 +59,16 @@ def test_get_previous_and_next_windows_tail_node():
 
     assert (results["previous_window"]['id'] == 2)
     assert (results["next_window"]['id'] == 1)
+
+
+def test_get_previous_and_next_windows_throws_exception():
+    mock = Mock()
+    test_data = base_test_data()
+    mock.sort_stacked_windows.return_value = test_data
+    provider = YabaiStackedWindowProvider(layout_details=mock)
+
+    try:
+        provider.get_previous_and_next_windows()
+    except Exception as e:
+        assert (e is not None)
+        assert ("Shoudln't" in str(e))
