@@ -2,8 +2,10 @@ from yabai_provider import YabaiProvider
 
 
 class YabaiLayoutDetails:
+    AppsToFilterOut = set(["Hammerspoon"])
+
     def __init__(self, yabai_provider=YabaiProvider()):
-        self.yabai_provider = YabaiProvider()
+        self.yabai_provider = yabai_provider
 
     def get_space_info(self):
         return self.yabai_provider.call_yabai(
@@ -25,8 +27,8 @@ class YabaiLayoutDetails:
                                     key=lambda i: i['stack-index'])
         return sorted_window_data
 
-    # TODO: Make this more customizable
-    def remove_hammerspoon_windows(self, window_data):
+    def filter_windows(self, window_data):
         return [
-            window for window in window_data if window["app"] != "Hammerspoon"
+            window for window in window_data
+            if window["app"] not in YabaiLayoutDetails.AppsToFilterOut
         ]

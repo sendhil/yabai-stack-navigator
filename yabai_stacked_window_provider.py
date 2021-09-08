@@ -10,8 +10,9 @@ class YabaiStackedWindowProvider:
         index = self.layout_details.get_layout_index(space_data)
         all_window_data = self.layout_details.get_data_for_windows_in_space(
             index)
-        # We remove hammerspoon windows because they show up as a part of the layout details in Yabai
-        filtered_window_data = self.layout_details.remove_hammerspoon_windows(
+        # This is to primarily remove Hammerspoon which shows up as
+        # a part of the layout details in Yabai
+        filtered_window_data = self.layout_details.filter_windows(
             all_window_data)
         sorted_window_data = self.layout_details.sort_stacked_windows(
             filtered_window_data)
