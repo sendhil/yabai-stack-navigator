@@ -31,6 +31,7 @@ def parse_arg_data() -> Dict[str, Any]:
     return args
 
 
+# TODO: Remove this and push this down to various methods
 def print_debug_info():
     navigator = YabaiNavigator()
     layout_details = YabaiLayoutDetails()
