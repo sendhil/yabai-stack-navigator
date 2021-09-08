@@ -9,11 +9,11 @@ class YabaiLayoutDetails:
 
     def get_space_info(self):
         return self.yabai_provider.call_yabai(
-            ["yabai", "-m", "query", "--spaces", "--space"])
+            ["-m", "query", "--spaces", "--space"])
 
     def get_data_for_windows_in_space(self, index):
         return self.yabai_provider.call_yabai(
-            ["yabai", "-m", "query", "--windows", "--space",
+            ["-m", "query", "--windows", "--space",
              str(index)])
 
     def is_layout_stacked(self):

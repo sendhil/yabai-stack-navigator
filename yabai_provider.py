@@ -2,10 +2,13 @@ import json
 import subprocess
 
 
-# TODO: Not the best name, rename it as it feels a bit too .NETey
+# TODO: Include "yabai" as an already included argument
 class YabaiProvider:
     """Class to abstract out calling out to Yabai"""
     def call_yabai(self, args, return_data=True):
+        if args[0] != "yabai":
+            args = ["yabai"] + args
+
         if return_data:
             return json.loads(
                 subprocess.run(args,

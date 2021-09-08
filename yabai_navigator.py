@@ -9,9 +9,8 @@ class YabaiNavigator:
     # TODO: Rename
     def focus_on_stacked_window(self, window_id):
         return self.yabai_provider.call_yabai(
-            ["yabai", "-m", "window", "--focus",
-             str(window_id)],
-            return_data=False)
+            ["-m", "window", "--focus",
+             str(window_id)], return_data=False)
 
     def focus_on_window(self, next=True):
         if next:
