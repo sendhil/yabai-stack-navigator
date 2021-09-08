@@ -9,7 +9,7 @@ def test_get_space_info_uses_correct_parameters():
     layout_details.get_space_info()
 
     mock.call_yabai.assert_called_once_with(
-        ["yabai", "-m", "query", "--spaces", "--space"])
+        ["-m", "query", "--spaces", "--space"])
 
 
 def test_get_data_for_windows_in_space_passes_index():
@@ -20,7 +20,7 @@ def test_get_data_for_windows_in_space_passes_index():
     layout_details.get_data_for_windows_in_space(test_index)
 
     mock.call_yabai.assert_called_once_with(
-        ["yabai", "-m", "query", "--windows", "--space", test_index])
+        ["-m", "query", "--windows", "--space", test_index])
 
 
 def test_is_layout_stacked():
