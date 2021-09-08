@@ -1,14 +1,10 @@
 import os
 from yabai_provider import YabaiProvider
-from yabai_layout_details import YabaiLayoutDetails
 
 
 class YabaiNavigator:
-    def __init__(self,
-                 yabai_provider=YabaiProvider(),
-                 layout_details=YabaiLayoutDetails()):
+    def __init__(self, yabai_provider=YabaiProvider()):
         self.yabai_provider = yabai_provider
-        self.layout_details = layout_details
 
     # TODO: Rename
     def focus_on_stacked_window(self, window_id):
