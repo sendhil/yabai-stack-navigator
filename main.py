@@ -6,6 +6,7 @@ import json
 from typing import Any, Dict
 from yabai_layout_details import YabaiLayoutDetails
 from yabai_navigator import YabaiNavigator
+from yabai_stacked_window_provider import YabaiStackedWindowProvider
 
 
 def parse_arg_data() -> Dict[str, Any]:
@@ -34,6 +35,7 @@ def print_debug_info():
     navigator = YabaiNavigator()
     layout_details = YabaiLayoutDetails()
     # TODO: Clean this up to lean on `utility_get_windows`
+    space_data = layout_details.get_space_info()
     index = layout_details.get_layout_index(space_data)
     all_window_data = layout_details.get_data_for_windows_in_space(index)
     sorted_window_data = navigator.sort_stacked_windows(
@@ -48,15 +50,14 @@ if __name__ == "__main__":
 
     navigator = YabaiNavigator()
     layout_details = YabaiLayoutDetails()
-
-    space_data = layout_details.get_space_info()
-    is_stacked = layout_details.is_layout_stacked(space_data)
+    stacked_window_provider = YabaiStackedWindowProvider()
 
     if args['debug']:
         print_debug_info()
 
-    if is_stacked:
-        window_navigation_data = layout_details.utility_get_windows(space_data)
+    if layout_details.is_layout_stacked():
+        window_navigation_data = stacked_window_provider.get_previous_and_next_windows(
+        )
         window_key = "next_window" if args['next'] else "previous_window"
         if not args['next'] and not args['previous']:
             raise Exception("Should not get here")
