@@ -3,8 +3,8 @@ from setuptools import find_packages, setup
 # TODO: Rename to yabai_stack_navigator
 
 setup(
-    name='yabai_navigator',
-    packages=find_packages(include=['yabai_navigator']),
+    name='yabai_stack_navigator',
+    packages=find_packages(include=['yabai_stack_navigator']),
     version='0.1.0',
     description=
     'Simple scripts to make navigating between stacks on Yabai easier.',

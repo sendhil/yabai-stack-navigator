@@ -1,4 +1,4 @@
-from yabai_navigator.yabai_stacked_window_provider \
+from yabai_stack_navigator.yabai_stacked_window_provider \
      import YabaiStackedWindowProvider
 from unittest.mock import Mock
 

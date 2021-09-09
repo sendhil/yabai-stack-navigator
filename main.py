@@ -4,9 +4,9 @@ import sys
 import argparse
 import logging
 from typing import Any, Dict
-from yabai_layout_details import YabaiLayoutDetails
-from yabai_navigator import YabaiNavigator
-from yabai_stacked_window_provider import YabaiStackedWindowProvider
+from yabai_stack_navigator.yabai_layout_details import YabaiLayoutDetails
+from yabai_stack_navigator.yabai_navigator import YabaiNavigator
+from yabai_stack_navigator.yabai_stacked_window_provider import YabaiStackedWindowProvider
 
 
 def parse_arg_data() -> Dict[str, Any]:
