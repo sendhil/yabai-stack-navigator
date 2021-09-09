@@ -35,7 +35,7 @@ def parse_arg_data() -> Dict[str, Any]:
     return args
 
 
-if __name__ == "__main__":
+def main():
     args = parse_arg_data()
 
     navigator = YabaiNavigator()
@@ -57,3 +57,7 @@ if __name__ == "__main__":
             navigator.focus_on_window(next=False)
         else:
             raise Exception("Should not get here")
+
+
+if __name__ == "__main__":
+    main()
