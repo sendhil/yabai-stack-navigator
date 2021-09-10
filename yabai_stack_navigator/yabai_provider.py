@@ -4,7 +4,6 @@ import logging
 from typing import Any
 
 
-# TODO: Include "yabai" as an already included argument
 class YabaiProvider:
     """Class to abstract out calling out to Yabai"""
     def call_yabai(self, args) -> Any:
