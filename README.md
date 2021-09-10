@@ -17,8 +17,8 @@ alt - h : yabai-stack-navigator --prev
 alt - l : yabai-stack-navigator --next
 ```
 
-Here's a video of this in action (note, I use the [Stackline](https://github.com/AdamWagner/stackline) plugin to help with visualizing stacks). 
+Here's a video of this in action (note, I use the [Stackline](https://github.com/AdamWagner/stackline) to help with visualizing stacks). 
 
-https://user-images.githubusercontent.com/437043/132806191-6702ddfc-3b9d-42f7-8ec3-ea00d23ef6a4.mov
+![yabai stack navigator](https://user-images.githubusercontent.com/437043/132923238-e103370c-3bd8-43ba-8f01-45f451ce4f40.gif)
 
 
