@@ -9,7 +9,10 @@ setup(name='yabai_stack_navigator',
       setup_requires=['pytest-runner'],
       tests_require=['pytest'],
       test_suite='tests',
+      project_urls={
+          'GitHub': 'https://github.com/sendhil/yabai-stack-navigator',
+      },
       entry_points='''
         [console_scripts]
         yabai-stack-navigator=main:main
-    ''')
+    '''),
