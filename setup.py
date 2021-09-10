@@ -1,14 +1,15 @@
 from setuptools import find_packages, setup
 
 setup(name='yabai_stack_navigator',
-      packages=find_packages(include=['yabai_stack_navigator']),
-      version='0.1.0',
+      packages=find_packages(),
+      version='0.1.1',
       description='Script to make navigating between stacks on Yabai easier.',
       author='Sendhil Panchadsaram',
       license='MIT',
       setup_requires=['pytest-runner'],
       tests_require=['pytest'],
       test_suite='tests',
+      py_modules=['main', 'yabai_stack_navigator'],
       project_urls={
           'GitHub': 'https://github.com/sendhil/yabai-stack-navigator',
       },
