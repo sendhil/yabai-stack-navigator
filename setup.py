@@ -1,11 +1,15 @@
 from setuptools import find_packages, setup
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(name='yabai_stack_navigator',
       packages=find_packages(),
-      version='0.1.1',
+      version='0.1.2',
       description='Script to make navigating between stacks on Yabai easier.',
       author='Sendhil Panchadsaram',
       license='MIT',
+      long_description=long_description,
       setup_requires=['pytest-runner'],
       tests_require=['pytest'],
       test_suite='tests',
