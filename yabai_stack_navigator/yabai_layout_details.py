@@ -3,7 +3,7 @@ from .yabai_provider import YabaiProvider
 
 
 class YabaiLayoutDetails:
-    AppsToFilterOut = set(["Hammerspoon"])
+    AppsToFilterOut = set(["Hammerspoon", "Kap"])
 
     def __init__(self, yabai_provider=YabaiProvider()):
         self.yabai_provider = yabai_provider
