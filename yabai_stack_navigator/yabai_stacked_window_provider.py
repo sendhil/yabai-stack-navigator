@@ -19,7 +19,7 @@ class YabaiStackedWindowProvider:
 
         number_of_windows = len(sorted_window_data)
         for index, window in enumerate(sorted_window_data):
-            if window["focused"] == 1:
+            if self._is_window_focused(window):
                 next_window_index = (index + 1) % number_of_windows
                 previous_window_index = (index - 1) % number_of_windows
                 return {
@@ -29,3 +29,13 @@ class YabaiStackedWindowProvider:
                 }
 
         raise Exception("Shoudln't get here")
+
+    def _is_window_focused(self, window):
+        # Yabai added breaking changes to it's data format in version 4.0.
+        # This method just works around those changes and maintains backwards compatability.
+        if "focused" in window:
+            return window["focused"]
+        elif "has-focus" in window:
+            return window["has-focus"]
+        else:
+            raise "Focus key not found"

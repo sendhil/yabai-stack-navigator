@@ -20,11 +20,34 @@ def base_test_data():
     ]
 
 
+def new_data_format_test_data():
+    data = base_test_data()
+    for index in range(len(data)):
+        del data[index]["focused"]
+        data[index]["has-focus"] = 0
+
+    return data
+
+
 # Check the scenario when we're navigating from the middle
 def test_get_previous_and_next_windows_middle_node():
     mock = Mock()
     test_data = base_test_data()
     test_data[1]["focused"] = 1
+    mock.sort_stacked_windows.return_value = test_data
+    provider = YabaiStackedWindowProvider(layout_details=mock)
+
+    results = provider.get_previous_and_next_windows()
+
+    assert (results["previous_window"]['id'] == 1)
+    assert (results["next_window"]['id'] == 3)
+
+
+# Tests for the new data format which uses 'has-focus' instead of 'focused'
+def test_get_previous_and_next_windows_middle_node_new_data_format():
+    mock = Mock()
+    test_data = new_data_format_test_data()
+    test_data[1]["has-focus"] = 1
     mock.sort_stacked_windows.return_value = test_data
     provider = YabaiStackedWindowProvider(layout_details=mock)
 
