@@ -1,4 +1,4 @@
-from .yabai_layout_details import YabaiLayoutDetails
+from yabai_stack_navigator.yabai_layout_details import YabaiLayoutDetails
 
 
 class YabaiStackedWindowProvider:

@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='yabai_stack_navigator',
     packages=find_packages(),
-    version='1.0.4',
+    version='1.0.5',
     description='Script to make navigating between stacks on Yabai easier.',
     author='Sendhil Panchadsaram',
     license='MIT',
@@ -21,5 +21,5 @@ setup(
     },
     entry_points='''
         [console_scripts]
-        yabai-stack-navigator=main:main
+        yabai-stack-navigator=yabai_stack_navigator.cli:main
     '''),
