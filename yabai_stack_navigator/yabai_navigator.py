@@ -13,13 +13,14 @@ class YabaiNavigator:
         return self.yabai_provider.call_yabai(args)
 
     def focus_on_window(self, next=True):
+        # Shell commands largely based off of https://github.com/koekeishiya/yabai/issues/225#issuecomment-529520392
         if next:
             logging.debug("Focusing on next window")
             os.system(
-                "yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first"
+                r"""yabai -m window --focus next || yabai -m window --focus "$((yabai -m query --spaces --display next || yabai -m query --spaces --display first) | jq -re '.[] | select(."is-visible" == true)."first-window"')" || yabai -m display --focus next || yabai -m display --focus first"""
             )
         else:
             logging.debug("Focusing on previous window")
             os.system(
-                "yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last"
+                r"""yabai -m window --focus prev || yabai -m window --focus "$((yabai -m query --spaces --display prev || yabai -m query --spaces --display last) | jq -re '.[] | select(."is-visible" == true)."last-window"')" || yabai -m display --focus prev || yabai -m display --focus last"""
             )
