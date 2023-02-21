@@ -24,6 +24,10 @@ Here's a video of this in action (note, I use the [Stackline](https://github.com
 
 # Changes
 
+## 1.0.8
+
+- Fixed ordering bug with more than one external monitor.
+
 ## 1.0.7
 
 - Added ability to navigate between displays (except when encountering a stack).
