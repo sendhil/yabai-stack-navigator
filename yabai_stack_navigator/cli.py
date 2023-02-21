@@ -10,6 +10,7 @@ from yabai_stack_navigator.yabai_stacked_window_provider \
     import YabaiStackedWindowProvider
 
 
+# TODO: Rewrite using click.py
 def parse_arg_data() -> Dict[str, Any]:
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group()
@@ -47,14 +48,14 @@ def main():
         window_key = "next_window" if args['next'] else "previous_window"
         if not args['next'] and not args['previous']:
             raise Exception("Should not get here")
-        navigator.focus_on_stacked_window(
+        navigator.focus_on_window(
             window_navigation_data[window_key]["id"])
     else:
         logging.debug("Non-stacked layout detected")
         if args['next']:
-            navigator.focus_on_window()
+            navigator.focus_on_next_window()
         elif args['previous']:
-            navigator.focus_on_window(next=False)
+            navigator.focus_on_previous_window()
         else:
             raise Exception("Should not get here")
 
