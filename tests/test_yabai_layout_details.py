@@ -73,19 +73,23 @@ def test_filter_windows():
     test_data = [
         {
             "window_id": 1,
-            "app": "VSCode"
+            "app": "VSCode",
+            "stack-index": 1
         },
         {
             "window_id": 2,
-            "app": "Hammerspoon"
+            "app": "Hammerspoon",
+            "stack-index": 2
         },
         {
             "window_id": 3,
-            "app": "Hammerspoon"
+            "app": "Hammerspoon",
+            "stack-index": 3
         },
         {
             "window_id": 4,
-            "app": "iTerm2"
+            "app": "iTerm2",
+            "stack-index": 4
         },
     ]
 
@@ -95,3 +99,35 @@ def test_filter_windows():
     assert (len(results) == 2)
     assert (results[0]["window_id"] == 1 and results[0]["app"] == "VSCode")
     assert (results[1]["window_id"] == 4 and results[1]["app"] == "iTerm2")
+
+
+def test_filter_windows_excludes_non_stacked_windows():
+    test_data = [
+        {
+            "window_id": 1,
+            "app": "Wispr Flow",
+            "stack-index": 0
+        },
+        {
+            "window_id": 2,
+            "app": "VK Calls",
+            "stack-index": 0
+        },
+        {
+            "window_id": 3,
+            "app": "iTerm2",
+            "stack-index": 1
+        },
+        {
+            "window_id": 4,
+            "app": "Code",
+            "stack-index": 2
+        },
+    ]
+
+    layout_details = YabaiLayoutDetails()
+    results = layout_details.filter_windows(test_data)
+
+    assert (len(results) == 2)
+    assert (results[0]["window_id"] == 3 and results[0]["app"] == "iTerm2")
+    assert (results[1]["window_id"] == 4 and results[1]["app"] == "Code")

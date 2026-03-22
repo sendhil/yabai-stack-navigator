@@ -72,4 +72,5 @@ class YabaiLayoutDetails:
         return [
             window for window in window_data
             if window["app"] not in YabaiLayoutDetails.AppsToFilterOut
+            and window.get("stack-index", 0) > 0
         ]
